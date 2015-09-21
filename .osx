@@ -1,0 +1,74 @@
+echo ""
+echo "Disabling press-and-hold for special keys in favor of key repeat"
+defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+
+echo ""
+echo "Setting a blazingly fast keyboard repeat rate"
+defaults write NSGlobalDomain KeyRepeat -int 0
+
+echo ""
+echo "Show icons for hard drives, servers, and removable media on the desktop? (y/n)"
+if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
+  defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
+fi
+
+#
+# finder settings
+
+echo ""
+echo "Show hidden files in Finder by default? (y/n)"
+read -r response
+if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
+  defaults write com.apple.Finder AppleShowAllFiles -bool true
+fi
+
+echo ""
+echo "Show dotfiles in Finder by default? (y/n)"
+read -r response
+if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
+  defaults write com.apple.finder AppleShowAllFiles TRUE
+fi
+
+echo ""
+echo "Show all filename extensions in Finder by default? (y/n)"
+read -r response
+if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
+  defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+fi
+
+echo ""
+echo "Use column view in all Finder windows by default? (y/n)"
+read -r response
+if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
+  defaults write com.apple.finder FXPreferredViewStyle Clmv
+fi
+
+# Show the ~/Library folder
+chflags nohidden ~/Library
+
+# Dock & Mission Control
+
+echo ""
+echo "Speeding up Mission Control animations and grouping windows by application"
+defaults write com.apple.dock expose-animation-duration -float 0.1
+defaults write com.apple.dock "expose-group-by-app" -bool true
+
+echo ""
+echo "Set Dock to auto-hide and remove the auto-hiding delay? (y/n)"
+read -r response
+if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
+  defaults write com.apple.dock autohide -bool true
+  defaults write com.apple.dock autohide-delay -float 0
+  defaults write com.apple.dock autohide-time-modifier -float 0
+fi
+
+###############################################################################
+# Mac App Store                                                               #
+###############################################################################
+
+# Enable the WebKit Developer Tools in the Mac App Store
+defaults write com.apple.appstore WebKitDeveloperExtras -bool true
+
+# Enable Debug Menu in the Mac App Store
+defaults write com.apple.appstore ShowDebugMenu -bool true
+
