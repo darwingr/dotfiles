@@ -65,6 +65,10 @@ map <Leader>ct :!ctags -R .<CR>
 nnoremap <Leader>t :call RunCurrentSpecFile()<CR>
 nnoremap <Leader>s :call RunNearestSpec()<CR>
 nnoremap <Leader>l :call RunLastSpec()<CR>
+nnoremap <Leader>a :call RunAllSpec()<CR>
+
+" Run last session specs in currrent terminal (iTerm2 only)
+let g:rspec_runner = "os_x_iterm2"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Solarized stuff
