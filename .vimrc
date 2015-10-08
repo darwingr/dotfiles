@@ -33,7 +33,6 @@ set cmdheight=1
 " Configure backspace so it acts as it should act
 set backspace=2   " Backspace deletes like most programs in insert mode
 "set backspace=eol,start,indent
-set whichwrap+=<,>,h,l
 
 " Show matching brackets when text indicator is over them
 set showmatch
@@ -46,7 +45,9 @@ set ffs=unix,dos,mac
 
 " Scroll in vim-iTerm2 like in Terminal.app
 set mouse=a
-set ttymouse=xterm2
+if !has('nvim')
+  set ttymouse=xterm2
+endif
 
 " VIM proper mouse reporting rows/columns in big terminal window, (for)from iterm2.com
 if has('mouse_sgr')
@@ -54,10 +55,13 @@ if has('mouse_sgr')
 endif
 
 " Copy/Paste with system clipboard
-set clipboard=unnamedplus
+"set clipboard=unnamedplus
 
 " Index ctags from any project, including those outside Rails
 map <Leader>ct :!ctags -R .<CR>
+
+" Use markdown syntax for .md extension
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-rspec mappings
@@ -80,7 +84,7 @@ syntax enable
 " Transparent terminal backgrounds not displayed well with solarized
 let g:solarized_termtrans = 1
 colorscheme solarized
-set background=light
+set background=dark
 
 " Toggle Solarized background
 call togglebg#map("<F5>")
@@ -102,6 +106,10 @@ nnoremap <C-l> <C-w>l
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
 
+" Cycle through listed buffers
+:nnoremap <C-n> :bnext<CR>
+:nnoremap <C-p> :bprevious<CR>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -117,8 +125,12 @@ set tabstop=2
 set list listchars=tab:»·,trail:·,nbsp:·
 
 " Make it obvious where 80 characters is
-set textwidth=80
-set colorcolumn=+1
+set colorcolumn=80
+
+" Auto hardwraps when formatoptions is not set
+"set textwidth=80
+" Disables textwidth autowrap, overrides possible by filetype
+"set formatoptions-=tc
 
 " Linebreak on 500 characters
 "set lbr
@@ -126,9 +138,12 @@ set colorcolumn=+1
 
 filetype plugin indent on
 
-set ai "Auto indent
-set si "Smart indent
-set wrap "Wrap lines
+" Auto indent
+set ai
+" Smart indent
+set si
+" Soft wrap lines to fit window
+set wrap
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Status line
@@ -145,7 +160,7 @@ let g:airline#extensions#tabline#enabled = 1
 "set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
 
 " These lines setup the environment to show graphics and colors correctly.
-set t_Co=256
+set t_Co=216
 "set term=xterm
 
 " Reduce (leader key) timeout on delay when leaving insert mode with powerline
@@ -155,6 +170,18 @@ set t_Co=256
 "python from powerline.vim import setup as powerline_setup
 "python powerline_setup()
 "python del powerline_setup
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Syntastic
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => NERDTree Settings
@@ -186,6 +213,9 @@ nnoremap <Up> :echoe "Use k"<CR>
 inoremap <Up> <C-o>:throw "Use ESC k"<CR>
 nnoremap <Down> :echoe "Use j"<CR>
 inoremap <Down> <C-o>:throw "Use ESC j"<CR>
+
+" Allow left and right navigation to wrap between lines
+set whichwrap+=<,>,h,l
 
 " niceties
 nnoremap ; :
