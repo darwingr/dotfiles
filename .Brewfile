@@ -1,3 +1,5 @@
+# usage:
+# brew bundle --global
 tap 'caskroom/cask'
 tap 'caskroom/versions'
 tap 'homebrew/bundle'
@@ -23,6 +25,7 @@ brew 'mackup'
 brew 'mysql'
 brew 'nginx'
 brew 'openssl'
+# brew link 'openssl' --force
 brew 'pcre'
 brew 'pkg-config'
 brew 'postgresql'
