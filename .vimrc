@@ -66,6 +66,11 @@ map <Leader>ct :!ctags -R .<CR>
 " Use markdown syntax for .md extension
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
+" sources VundleToPlug
+"if filereadable(expand("~/.vimrc.bundles"))
+"  source ~/.vimrc.bundles
+"endif
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-rspec mappings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
