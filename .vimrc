@@ -43,6 +43,9 @@ set encoding=utf8
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
 
+" Italicize comments
+highlight Comment cterm=italic
+
 " Scroll in vim-iTerm2 like in Terminal.app
 set mouse=a
 if !has('nvim')
@@ -138,7 +141,7 @@ set colorcolumn=80
 
 filetype plugin indent on
 
-" Auto indent
+" Auto indent, problematic when pasting so use "*p
 set ai
 " Smart indent
 set si
@@ -182,6 +185,9 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+"let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
+let g:syntastic_eruby_ruby_quiet_messages =
+    \ {"regex": "possibly useless use of a variable in void context"}
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => NERDTree Settings
