@@ -13,7 +13,7 @@ Thumbs.db
 .Spotlight-V100
 .Trashes
 
-# Workspace do Sublime
+# Sublime Text
 *.sublime-workspace
 
 # Compiled Python files
@@ -26,11 +26,23 @@ Thumbs.db
 venv
 node_modules
 .sass-cache
+.bundle
+.env
+db/*.sqlite3
+log/*.log
+tmp/**/*
+!tmp/cache/.keep
 
 # Vim
+*.sw[nop]
 [._]*.s[a-w][a-z]
 [._]s[a-w][a-z]
 *.un~
 Session.vim
 .netrwhist
 *~
+
+# Ctags
+tags
+!tags/
+gems.tags

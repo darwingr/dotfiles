@@ -1,18 +1,21 @@
 [user]
-	name = Darwin Groskleg
-	email = darwingroskleg@gmail.com
+  name = Darwin Groskleg
+  email = darwingroskleg@gmail.com
 [color]
-	ui = true
-	status = auto
-	branch = auto
-	interactive = auto
-	diff = auto
+  ui = true
+  # auto is true for terminal but false when piped
+  status = auto
+  branch = auto
+  interactive = auto
+  diff = auto
 [core]
-	excludesfile = /Users/darwingroskleg/.gitignore_global
+  excludesfile = /Users/darwingroskleg/.gitignore_global
   # editor = subl -n -w
   editor = vim
 [push]
-	default = simple
-# [commit]
-#   template = ~/.gitmessage
-
+  default = simple
+  # default = current
+[commit]
+  template = ~/.gitmessage
+[rebase]
+  autosquash = true
