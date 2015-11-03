@@ -43,9 +43,6 @@ set encoding=utf8
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
 
-" Italicize comments
-highlight Comment cterm=italic
-
 " Scroll in vim-iTerm2 like in Terminal.app
 set mouse=a
 if !has('nvim')
@@ -70,6 +67,26 @@ autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 "if filereadable(expand("~/.vimrc.bundles"))
 "  source ~/.vimrc.bundles
 "endif
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" MacVim font
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" dz = dotted zero
+" lg = linegap
+
+" ! causes mvim to to no longer italicize comments
+" Sets MacVim font (powerline) and size
+"   Default for mvim is Menlo, which includes italic & bold typefaces
+"if has("gui_running")
+"   let s:uname = system("uname")
+"   if s:uname == "Darwin\n"
+"      set guifont=Meslo\ LG\ M\ Regular\ for\ Powerline:h14
+"   endif
+"endif
+
+" ! Need a font that includes italic typefaces
+" Italicize comments
+highlight Comment gui=italic cterm=italic
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-rspec mappings
@@ -168,7 +185,7 @@ let g:airline#extensions#tabline#enabled = 1
 "set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
 
 " These lines setup the environment to show graphics and colors correctly.
-set t_Co=216
+set t_Co=256
 "set term=xterm
 
 " Reduce (leader key) timeout on delay when leaving insert mode with powerline
