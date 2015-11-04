@@ -69,37 +69,6 @@ autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 "endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" MacVim font
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" dz = dotted zero
-" lg = linegap
-
-" ! causes mvim to to no longer italicize comments
-" Sets MacVim font (powerline) and size
-"   Default for mvim is Menlo, which includes italic & bold typefaces
-"if has("gui_running")
-"   let s:uname = system("uname")
-"   if s:uname == "Darwin\n"
-"      set guifont=Meslo\ LG\ M\ Regular\ for\ Powerline:h14
-"   endif
-"endif
-
-" ! Need a font that includes italic typefaces
-" Italicize comments
-highlight Comment gui=italic cterm=italic
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" vim-rspec mappings
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <Leader>t :call RunCurrentSpecFile()<CR>
-nnoremap <Leader>s :call RunNearestSpec()<CR>
-nnoremap <Leader>l :call RunLastSpec()<CR>
-nnoremap <Leader>a :call RunAllSpec()<CR>
-
-" Run last session specs in currrent terminal (iTerm2 only)
-let g:rspec_runner = "os_x_iterm2"
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Solarized stuff
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " To keep current color setting
@@ -113,6 +82,40 @@ set background=dark
 
 " Toggle Solarized background
 call togglebg#map("<F5>")
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" MacVim font
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" dz = dotted zero
+" lg = linegap
+
+" ! causes mvim to to no longer italicize comments
+" Sets MacVim font (powerline) and size
+"   Default for mvim is Menlo, which includes italic & bold typefaces
+if has("gui_running")
+   let s:uname = system("uname")
+   if s:uname == "Darwin\n"
+      "set guifont=Meslo\ LG\ M\ Regular\ for\ Powerline:h14
+      set guifont=Source\ Code\ Pro:h14
+   endif
+endif
+
+" ! Need a font that includes italic typefaces
+" Italicize comments
+let &t_ZH="\e[3m"
+let &t_ZR="\e[23m"
+highlight Comment gui=italic cterm=italic
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim-rspec mappings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <Leader>t :call RunCurrentSpecFile()<CR>
+nnoremap <Leader>s :call RunNearestSpec()<CR>
+nnoremap <Leader>l :call RunLastSpec()<CR>
+nnoremap <Leader>a :call RunAllSpec()<CR>
+
+" Run last session specs in currrent terminal (iTerm2 only)
+let g:rspec_runner = "os_x_iterm2"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Switching files, panes & windows
