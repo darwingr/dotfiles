@@ -45,7 +45,17 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(catimg colored-man-pages rails git)
+# catimg - show image in terminal
+# common-aliases - just that
+# colored-man-pages - sets LESS_TERMCAP colors for man
+# rails - rails/rake aliases
+# git - adds cmd aliases and functions for current branch
+# gitfast - replaces git because it's slow
+# git-auto-status - ??
+# git-prompt - ??
+# git-extras - adds some nice git completions
+# git-flow - completions for git-flow
 
 # User configuration
 
@@ -112,3 +122,16 @@ export WORKON_HOME=$HOME/.virtualenvs
 export GOPATH=$HOME/go/
 export PATH=$PATH:$GOPATH/bin
 
+# coloured man pages
+#man() {
+#    env \
+#    LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+#    LESS_TERMCAP_md=$(printf "\e[1;31m") \
+#    LESS_TERMCAP_me=$(printf "\e[0m") \
+#    LESS_TERMCAP_se=$(printf "\e[0m") \
+#    LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+#    LESS_TERMCAP_ue=$(printf "\e[0m") \
+#    LESS_TERMCAP_us=$(printf "\e[1;32m") \
+#    PAGER=/usr/bin/less \
+#    man "$@"
+#}
