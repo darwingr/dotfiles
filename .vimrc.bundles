@@ -27,25 +27,57 @@ com! -nargs=+  -bar Bundle call VundleToPlug("Bundle", <args>)
 
 call plug#begin('~/.vim/bundle')
 
-" Define bundles via Github repos
-"Plug 'christoomey/vim-run-interactive'
-"Plug 'kchmck/vim-coffee-script'
-"Plug 'ctrlpvim/ctrlp.vim'
-"Plug 'pbrisbin/vim-mkdir'
-"Plug 'scrooloose/syntastic'
-"Plug 'slim-template/vim-slim'
-"Plug 'thoughtbot/vim-rspec'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'christoomey/vim-run-interactive'
+" http://vimawesome.com/plugin/vim-test-all-too-well
+" Plug 'janko-m/vim-test'
+Plug 'tpope/vim-dispatch'
+
+" Syntax Color
+Plug 'kchmck/vim-coffee-script'
+Plug 'elixir-lang/vim-elixir'
+Plug 'Glench/Vim-Jinja2-Syntax'
+
+" Syntax Checking
+Plug 'scrooloose/syntastic'
+Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
+
+" Project
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'tpope/vim-eunuch' " Unix commands
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'ledger/vim-ledger'
+Plug 'pbrisbin/vim-mkdir'
+Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-projectionist'
+Plug 'majutsushi/tagbar'
+
+" Editing
+Plug 'Raimondi/delimitMate'
+Plug 'mattn/emmet-vim'
+Plug 'Yggdroot/indentLine'
+"Plug 'terryma/vim-multiple-cursors'
+Plug 'darfink/vim-plist'
+Plug 'tpope/vim-surround'
+" update alone :PlugUpdate YouCompleteMe
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --tern-completer' }
+
+" Ruby
 "Plug 'tpope/vim-bundler'
-"Plug 'tpope/vim-endwise'
-"Plug 'tpope/vim-eunuch'
-"Plug 'tpope/vim-fugitive'
-"Plug 'tpope/vim-projectionist'
-"Plug 'tpope/vim-rails'
-"Plug 'tpope/vim-rake'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-rake'
+Plug 'thoughtbot/vim-rspec'
+Plug 'vim-ruby/vim-ruby'
+"Plug 'slim-template/vim-slim'
 "Plug 'tpope/vim-repeat'
-"Plug 'tpope/vim-surround'
-"Plug 'vim-ruby/vim-ruby'
 "Plug 'vim-scripts/tComment'
+
+" colorschemes
+Plug 'chriskempson/base16-vim'
+Plug 'altercation/vim-colors-solarized'
 
 if filereadable(expand("~/.vimrc.bundles.local"))
   source ~/.vimrc.bundles.local
