@@ -19,3 +19,5 @@
   template = ~/.gitmessage
 [rebase]
   autosquash = true
+[ssh]
+	postBuffer = 524288000

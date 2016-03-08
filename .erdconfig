@@ -6,14 +6,15 @@ disconnected: true
 filename: erd
 filetype: pdf
 indirect: true
-inheritance: false
+inheritance: true
 markup: true
 notation: simple
 orientation: horizontal
-polymorphism: false
+polymorphism: true
 sort: true
 warn: true
-title: sample title
+title: true
 exclude: null
-only: null
+# Only specified Models, null causes partial render(fail)
+#only: null
 prepend_primary: false
