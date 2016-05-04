@@ -1,5 +1,11 @@
-execute pathogen#infect()
-call pathogen#infect()
+" sources VundleToPlug
+if filereadable(expand("~/.vimrc.bundles"))
+  source ~/.vimrc.bundles
+endif
+filetype plugin indent on
+
+" Disables vi compatible mode, enabling more features
+set nocompatible
 
 " Set leader key, a prefix for user custom shortcuts
 let mapleader = " "
@@ -18,21 +24,45 @@ set hlsearch      " turns on search highlighting, C-r for last search
 set showcmd
 set autowrite     " Automatically :write before running commands
 
+" jump xml tags
+runtime macros/matchit.vim
+
+" Group for autocmd
+augroup vimrcEx
+  autocmd!
+
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it for commit messages, when the position is invalid, or when
+  " inside an event handler (happens when dropping a file on gvim).
+  autocmd BufReadPost *
+    \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
+    \   exe "normal g`\"" |
+    \ endif
+
+  " Set syntax highlighting for specific file types
+  autocmd BufRead,BufNewFile Appraisals set filetype=ruby
+  autocmd BufRead,BufNewFile *.md set filetype=markdown
+  autocmd BufRead,BufNewFile,BufReadPost .{jscs,jshint,eslint}rc set filetype=json
+augroup END
+
+" required for ignores to apply
+if exists("g:ctrlp_user_command")
+    unlet g:ctrlp_user_command
+endif
+" Sane Ignore For ctrlp (ctrlp only, not wildignore)
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\.git$\|\.hg$\|\.svn$\|\.yardoc\|public\/images\|public\/system\|data\|log\|tmp$',
+  \ 'file': '\.exe$\|\.so$\|\.dat$\|\.swp$\|\.zip$'
+  \ }
+
 " Save on losing focus
 au FocusLost * :wa
 
 " Run commands that require an interactive shell
 nnoremap <Leader>r :RunInInteractiveShell<space>
 
-" Disables vi compatible mode, enabling more features
-set nocompatible
-
 " Height of the command bar
 set cmdheight=1
-
-" Configure backspace so it acts as it should act
-set backspace=2   " Backspace deletes like most programs in insert mode
-"set backspace=eol,start,indent
 
 " Show matching brackets when text indicator is over them
 set showmatch
@@ -43,6 +73,12 @@ set encoding=utf8
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
 
+" Copy/Paste with system clipboard
+"set clipboard=unnamedplus
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Mouse & Scroll
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Scroll in vim-iTerm2 like in Terminal.app
 set mouse=a
 if !has('nvim')
@@ -54,37 +90,46 @@ if has('mouse_sgr')
     set ttymouse=sgr
 endif
 
-" Copy/Paste with system clipboard
-"set clipboard=unnamedplus
+" Slow terminal vim
+set lazyredraw
+set ttyfast
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" CTags!!
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Index ctags from any project, including those outside Rails
 map <Leader>ct :!ctags -R .<CR>
 
-" Use markdown syntax for .md extension
-autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+" Show Tagbar current file
+nmap <Leader>b :TagbarToggle<CR>
 
-" sources VundleToPlug
-"if filereadable(expand("~/.vimrc.bundles"))
-"  source ~/.vimrc.bundles
-"endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Solarized stuff
+" Colorscheme
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " To keep current color setting
 syntax enable
 " For vim to overrule current terminal color setting
 "syntax on
+
+" To run base16 vim using 256 terminal (iterm theme or shell theme)
+"let base16colorspace=256 " set above colorscheme
+
+" 24bit color, default background = light
+"colorscheme base16-default
+"colorscheme base16-solarized
+"colorscheme base16-atelierdune
+
 " Transparent terminal backgrounds not displayed well with solarized
 let g:solarized_termtrans = 1
 colorscheme solarized
-set background=dark
+set background=dark " this is a gui-vim config
 
-" Toggle Solarized background
+" Toggle Solarized background, conflicts with ctrlP
 call togglebg#map("<F5>")
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" MacVim font
+" Font
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " dz = dotted zero
 " lg = linegap
@@ -143,11 +188,11 @@ nnoremap <leader><leader> <c-^>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Use spaces instead of tabs
 set expandtab
-" Be smart when using tabs ;)
-set smarttab
 " 1 tab == 2 spaces
 set shiftwidth=2
 set tabstop=2
+" tab follows shiftwidth on new lines
+set smarttab
 
 " Display extra whitespace
 set list listchars=tab:»·,trail:·,nbsp:·
@@ -163,8 +208,6 @@ set colorcolumn=80
 " Linebreak on 500 characters
 "set lbr
 "set tw=500
-
-filetype plugin indent on
 
 " Auto indent, problematic when pasting so use "*p
 set ai
@@ -206,13 +249,15 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
+let g:syntastic_mode_map = { 'passive_filetypes': ['html'] }
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
 "let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
 let g:syntastic_eruby_ruby_quiet_messages =
     \ {"regex": "possibly useless use of a variable in void context"}
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => NERDTree Settings
@@ -225,7 +270,7 @@ autocmd VimEnter * wincmd p
 "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 "shortcut to open NERDTree
-map <C-n> :NERDTreeToggle<CR>
+map <leader>n :NERDTreeToggle<CR>
 
 " Close vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
@@ -247,6 +292,12 @@ inoremap <Down> <C-o>:throw "Use ESC j"<CR>
 
 " Allow left and right navigation to wrap between lines
 set whichwrap+=<,>,h,l
+
+" Configure backspace so it acts as it should act
+"set backspace=2   " same as 3 below, see help 'backspace'
+"set backspace=indent
+"set backspace=eol
+"set backspace=start
 
 " niceties
 nnoremap ; :
