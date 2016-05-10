@@ -1,4 +1,3 @@
-# Basic options
 --recurse=yes
 --tag-relative=yes
 --exclude='.git','log'
@@ -7,7 +6,6 @@
 --exclude=log/*
 --exclude=public/*
 
-# Ruby
 --regex-ruby=/(^|[:;])[ \t]*([A-Z][[:alnum:]_]+) *=/\2/c,class,constant/
 --regex-ruby=/^[ \t]*attr_(reader|writer|accessor) (:[a-z0-9_]+, )*:([a-z0-9_]+)/\3/A,attr/
 --regex-ruby=/(^|;)[ \t]*(private|protected|public)(_class_method)?\(? def *(self.)?([[:alnum:]_]+)/\5/f,inline scoped method,inline scoped methods (Ruby 2.1+)/
@@ -16,11 +14,9 @@
 --regex-ruby=/(^|;)[ \t]*event\(? *:([[:alnum:]_]+)/\2!/f,function,aasm_event/
 --regex-ruby=/(^|;)[ \t]*event\(? *:([[:alnum:]_]+)/\2?/f,function,aasm_event/
 
-# Rails
 --regex-ruby=/(^|;)[ \t]*(has_many|belongs_to|has_one|has_and_belongs_to_many)\(? *:([[:alnum:]_]+)/\3/f,association,Active Record association/
 --regex-ruby=/(^|;)[ \t]*(named_)?scope\(? *:([[:alnum:]_]+)/\3/f,scope,ActiveRecord scope/
 
-# Elixir
 --langdef=Elixir
 --langmap=Elixir:.ex.exs
 --regex-Elixir=/^[ \t]*def(p?)[ \t]+([a-z_][a-zA-Z0-9_?!]*)/\2/f,functions,functions (def ...)/
@@ -33,4 +29,4 @@
 --regex-Elixir=/^[ \t]*defmodule[ \t]+([A-Z][a-zA-Z0-9_]*\.)*([A-Z][a-zA-Z0-9_?!]*)/\2/m,modules,modules (defmodule ...)/
 --regex-Elixir=/^[ \t]*defprotocol[ \t]+([A-Z][a-zA-Z0-9_]*\.)*([A-Z][a-zA-Z0-9_?!]*)/\2/p,protocols,protocols (defprotocol...)/
 --regex-Elixir=/^[ \t]*Record\.defrecord[ \t]+:([a-zA-Z0-9_]+)/\1/r,records,records (defrecord...)/
---regex-Elixir=/^[ \t]*test[ \t]+\"([a-z_][a-zA-Z0-9_?! ]*)\"*/\1/t,tests,tests (test ...)/)
+--regex-Elixir=/^[ \t]*test[ \t]+\"([a-z_][a-zA-Z0-9_?! ]*)\"*/\1/t,tests,tests (test ...)/
