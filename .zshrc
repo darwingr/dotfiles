@@ -45,7 +45,9 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(catimg colored-man-pages rails git)
+
+plugins=(colored-man-pages git rails)
+
 # catimg - show image in terminal
 # common-aliases - just that
 # colored-man-pages - sets LESS_TERMCAP colors for man
@@ -58,8 +60,6 @@ plugins=(catimg colored-man-pages rails git)
 # git-flow - completions for git-flow
 
 # User configuration
-
-# export PATH="/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Server.app/Contents/ServerRoot/usr/bin:/Applications/Server.app/Contents/ServerRoot/usr/sbin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -68,11 +68,12 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export VISUAL='vim'
+  export EDITOR="$VISUAL"
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -85,9 +86,16 @@ source $ZSH/oh-my-zsh.sh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
+# https://www.digitalocean.com/community/tutorials/an-introduction-to-useful-bash-aliases-and-functions
+#
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias md2word=md2word # alias the function below
+alias sshmonolith="ssh -t monolith \"cd /Groups/monolith; exec \$SHELL --login\""
+# preserve file tags, if osx
+#alias rsync="rsync -E"
+#alias scp="scp -E"
 
 # hide my username from constantly showing for user@hostname
 # DEFAULT_USER=`whoami`
@@ -95,10 +103,15 @@ DEFAULT_USER=darwingroskleg
 
 # Below here mirrors .bash_profile
 
+# Docker
 export DOCKER_HOST=tcp://192.168.59.103:2376
 export DOCKER_CERT_PATH='/Users/darwingroskleg/.boot2docker/certs/boot2docker-vm'
 export DOCKER_TLS_VERIFY=1
 
+# Base16 Shell
+#BASE16_SHELL="$HOME/.config/base16-shell/base16-atelierdune.dark.sh"
+#BASE16_SHELL="$HOME/.config/base16-shell/solarized.dark.sh"
+#[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
 # Set CLICOLOR if you want Ansi Colors in iTerm2
 export CLICOLOR=1
 # Set colors to match iTerm2 Terminal Colors
@@ -108,19 +121,25 @@ export TERM=xterm-256color
 source ~/.iterm2_shell_integration.`basename $SHELL`
 
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+export PATH="/usr/local/sbin:$PATH"
 
-# ruby stuff
+# Ruby
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-
-# python stuff
+# Elixir
+if which exenv > /dev/null; then eval "$(exenv init -)"; fi
+# Python
 #if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 #if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
 export WORKON_HOME=$HOME/.virtualenvs
 #source /usr/local/bin/virtualenvwrapper.sh
 
-# go stuff
+# Golang
 export GOPATH=$HOME/go/
 export PATH=$PATH:$GOPATH/bin
+
+if [ -f "/usr/local/share/zsh/site-functions" ]; then
+  . "usr/local/share/zsh/site-functions"
+fi
 
 # coloured man pages
 #man() {
@@ -135,3 +154,51 @@ export PATH=$PATH:$GOPATH/bin
 #    PAGER=/usr/bin/less \
 #    man "$@"
 #}
+
+### Functions ###
+
+# Slow Git
+# Resolving slow prompt on large repositories
+#git_prompt() {
+#  temp=`git symbolic-ref HEAD 2>/dev/null | cut -d / -f 3`
+#  if [ «$temp» != «» ]; then echo «$temp:»; fi
+#}
+#setopt prompt_subst
+#export RPROMPT='[$(git_prompt)%~]'
+# This one worked: ...or it was the git ignoreStat config
+#function git_prompt_info() {
+#  ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+# aak echo "$ZSH_THEME_GIT_PROMPT_PREFIX${ref#refs/heads/}${ZSH_THEME_GIT_PROMPT_CLEAN}${ZSH_THEME_GIT_PROMPT_SUFFIX}"
+#}
+
+# HOMEBREW
+# NOTE `brew cleanup` version mismatch failures happen in development
+#alias brewfresh=brewfresh
+# relink openssl `&& brew unlink openssl && brew link openssl --overwrite --force`
+function brewfresh() {
+  brew update
+  brew upgrade --cleanup
+  # brew ls --unbrewed
+  brew doctor
+  brew ls --pinned --versions
+  brew outdated
+}
+
+# Markdown to Word
+function md2word () {
+    PANDOC_INSTALLED=$(pandoc --version >> /dev/null; echo $?)
+
+    if [ "0" == ${PANDOC_INSTALLED} ]; then
+        pandoc -o $2 -f markdown -t docx $1
+    else
+        echo "Pandoc is not installed. Unable to convert document."
+    fi
+}
+
+function mkcd() {
+  mkdir -p "$@" && cd "$@"
+}
+
+function pbsend() {
+  pbpaste | ssh "$@" pbcopy
+}

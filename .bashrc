@@ -22,6 +22,10 @@ export WORKON_HOME=$HOME/.virtualenvs
 export GOPATH=$HOME/go/
 export PATH=$PATH:$GOPATH/bin
 
+if [ -f "/usr/local/etc/bash_completion" ]; then
+  . "/usr/local/etc/bash_completion"
+fi
+
 # coloured man pages
 man() {
     env \
