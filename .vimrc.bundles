@@ -3,29 +3,11 @@ if &compatible
   set nocompatible
 end
 
-" Shim command and function to allow migration from Vundle to vim-plug.
-function! VundleToPlug(vundle_command, arg, ...)
-  echom "You are using Vundle's `".a:vundle_command."` command to declare plugins. Dotfiles now uses vim-plug for plugin mangagement. Please rename uses of `".a:vundle_command."` to `Plug`. Plugin was '".a:arg."'."
-  let vim_plug_options = {}
-
-  if a:0 > 0
-    if has_key(a:1, 'name')
-      let name = a:1.name
-      let vim_plug_options.dir = "$HOME/.vim/bundle/".a:1.name
-    endif
-
-    if has_key(a:1, 'rtp')
-      let vim_plug_options.rtp = a:1.rtp
-    endif
-  endif
-
-  Plug a:arg, vim_plug_options
-endfunction
-
 com! -nargs=+  -bar Plugin call VundleToPlug("Plugin", <args>)
 com! -nargs=+  -bar Bundle call VundleToPlug("Bundle", <args>)
 
 call plug#begin('~/.vim/bundle')
+"Plug 'tpope/vim-sensible'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -44,7 +26,7 @@ Plug 'scrooloose/syntastic'
 Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
 
 " Project
-Plug 'ctrlpvim/ctrlp.vim'
+""""Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tpope/vim-eunuch' " Unix commands
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
@@ -62,7 +44,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'darfink/vim-plist'
 Plug 'tpope/vim-surround'
 " update alone :PlugUpdate YouCompleteMe
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --tern-completer' }
+""""Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --tern-completer' }
 
 " Ruby
 "Plug 'tpope/vim-bundler'
