@@ -12,6 +12,8 @@
   excludesfile = /Users/darwingroskleg/.gitignore_global
   # editor = subl -n -w
   editor = vim
+  # "true" to avoid detecting if files have changed by setting the assume-unchanged bit
+  ignoreStat = false
 [push]
   default = simple
   # default = current
@@ -20,4 +22,10 @@
 [rebase]
   autosquash = true
 [ssh]
-	postBuffer = 524288000
+  postBuffer = 524288000
+#[difftool "sourcetree"]
+#	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+#	path = 
+#[mergetool "sourcetree"]
+#	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+#	trustExitCode = true
