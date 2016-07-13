@@ -1,10 +1,18 @@
-" TODO Comment out pathoge#infect from .vimrc
 if &compatible
   set nocompatible
 end
 
-com! -nargs=+  -bar Plugin call VundleToPlug("Plugin", <args>)
-com! -nargs=+  -bar Bundle call VundleToPlug("Bundle", <args>)
+function! BuildYCM(info)
+  " name:   name of plugin
+  " status: 'installed', 'updated', or 'unchanged'
+  " force:  set on PlugInstall! or PlugUpdate!
+  " Will be executed inside the directory of the plugin
+  if a:info.status == 'installed' || a:info.force
+    !./install.py
+        \ --clang-completer
+        \ --tern-completer
+  endif
+endfunction
 
 call plug#begin('~/.vim/bundle')
 "Plug 'tpope/vim-sensible'
@@ -44,7 +52,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'darfink/vim-plist'
 Plug 'tpope/vim-surround'
 " update alone :PlugUpdate YouCompleteMe
-""""Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --tern-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
 
 " Ruby
 "Plug 'tpope/vim-bundler'
