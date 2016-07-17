@@ -81,22 +81,6 @@ fi
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# https://www.digitalocean.com/community/tutorials/an-introduction-to-useful-bash-aliases-and-functions
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-alias md2word=md2word # alias the function below
-alias sshmonolith="ssh -t monolith \"cd /Groups/monolith; exec \$SHELL --login\""
-# preserve file tags, if osx
-#alias rsync="rsync -E"
-#alias scp="scp -E"
-
 # hide my username from constantly showing for user@hostname
 # DEFAULT_USER=`whoami`
 DEFAULT_USER=darwingroskleg
@@ -141,6 +125,8 @@ if [ -f "/usr/local/share/zsh/site-functions" ]; then
   . "usr/local/share/zsh/site-functions"
 fi
 
+### Functions ###
+
 # coloured man pages
 #man() {
 #    env \
@@ -154,8 +140,6 @@ fi
 #    PAGER=/usr/bin/less \
 #    man "$@"
 #}
-
-### Functions ###
 
 # Slow Git
 # Resolving slow prompt on large repositories
@@ -202,3 +186,23 @@ function mkcd() {
 function pbsend() {
   pbpaste | ssh "$@" pbcopy
 }
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# https://www.digitalocean.com/community/tutorials/an-introduction-to-useful-bash-aliases-and-functions
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+alias md2word=md2word # alias the function below
+alias sshmonolith="ssh -t monolith \"cd /Groups/monolith; exec \$SHELL --login\""
+# preserve file tags, if osx
+#alias rsync="rsync -E"
+#alias scp="scp -E"
+alias bins="ls /usr/bin /usr/sbin /bin /sbin"
+
+# aliases
+[[ -f ~/.aliases ]] && source ~/.aliases
