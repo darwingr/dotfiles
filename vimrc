@@ -103,6 +103,13 @@ map <Leader>ct :!ctags -R .<CR>
 " Show Tagbar current file
 nmap <Leader>b :TagbarToggle<CR>
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" YouCompleteMe
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Compilation flags file required for C & C++
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf_global.py'
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Colorscheme
