@@ -82,13 +82,6 @@ fi
 # DEFAULT_USER=`whoami`
 DEFAULT_USER=darwingroskleg
 
-# Below here mirrors .bash_profile
-
-# Docker
-export DOCKER_HOST=tcp://192.168.59.103:2376
-export DOCKER_CERT_PATH='/Users/darwingroskleg/.boot2docker/certs/boot2docker-vm'
-export DOCKER_TLS_VERIFY=1
-
 # Base16 Shell
 #BASE16_SHELL="$HOME/.config/base16-shell/base16-atelierdune.dark.sh"
 #BASE16_SHELL="$HOME/.config/base16-shell/solarized.dark.sh"
@@ -96,13 +89,20 @@ export DOCKER_TLS_VERIFY=1
 # Set CLICOLOR if you want Ansi Colors in iTerm2
 export CLICOLOR=1
 # Set colors to match iTerm2 Terminal Colors
-export TERM=xterm-256color
+#export TERM=xterm-256color   # docker-machine ssh uses "xterm"
 
 # iterm shell integration
 source ~/.iterm2_shell_integration.`basename $SHELL`
 
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 export PATH="/usr/local/sbin:$PATH"
+
+# Docker - changes with new docker-machine instances
+# Suggested to run: `eval "$(docker-machine env default)"`
+#export DOCKER_TLS_VERIFY="1"
+#export DOCKER_HOST="tcp://192.168.99.100:2376"
+#export DOCKER_CERT_PATH="/Users/darwingroskleg/.docker/machine/machines/default"
+#export DOCKER_MACHINE_NAME="default"
 
 # Ruby
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
@@ -115,14 +115,18 @@ export WORKON_HOME=$HOME/.virtualenvs
 #source /usr/local/bin/virtualenvwrapper.sh
 
 # Golang
-export GOPATH=$HOME/go/
-export PATH=$PATH:$GOPATH/bin
+#export GOPATH=$HOME/go/
+#export PATH=$PATH:$GOPATH/bin
 
 if [ -f "/usr/local/share/zsh/site-functions" ]; then
   . "usr/local/share/zsh/site-functions"
 fi
 
 ### Functions ###
+
+function docker-env() {
+  eval $(docker-machine env $1);
+}
 
 # coloured man pages
 #man() {
@@ -158,7 +162,7 @@ fi
 # relink openssl `&& brew unlink openssl && brew link openssl --overwrite --force`
 function brewfresh() {
   brew update
-  brew upgrade --cleanup
+  brew upgrade #--cleanup
   # brew ls --unbrewed
   brew doctor
   brew ls --pinned --versions
