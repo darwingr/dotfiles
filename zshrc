@@ -79,8 +79,7 @@ else
 fi
 
 # hide my username from constantly showing for user@hostname
-# DEFAULT_USER=`whoami`
-DEFAULT_USER=darwingroskleg
+DEFAULT_USER=`whoami`
 
 # Base16 Shell
 #BASE16_SHELL="$HOME/.config/base16-shell/base16-atelierdune.dark.sh"
@@ -90,7 +89,6 @@ DEFAULT_USER=darwingroskleg
 export CLICOLOR=1
 # Set colors to match iTerm2 Terminal Colors
 #export TERM=xterm-256color   # docker-machine ssh uses "xterm"
-
 # iterm shell integration
 source ~/.iterm2_shell_integration.`basename $SHELL`
 
@@ -113,10 +111,6 @@ if which exenv > /dev/null; then eval "$(exenv init -)"; fi
 #if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
 export WORKON_HOME=$HOME/.virtualenvs
 #source /usr/local/bin/virtualenvwrapper.sh
-
-# Golang
-#export GOPATH=$HOME/go/
-#export PATH=$PATH:$GOPATH/bin
 
 if [ -f "/usr/local/share/zsh/site-functions" ]; then
   . "usr/local/share/zsh/site-functions"
