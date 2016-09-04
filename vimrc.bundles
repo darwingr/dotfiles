@@ -1,3 +1,9 @@
+" To Update
+"   :PlugUpgade
+"   :PlugUpdate
+" To uninstall, comment out and run
+"   :PlugClean
+
 if &compatible
   set nocompatible
 end
