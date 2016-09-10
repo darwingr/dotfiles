@@ -31,6 +31,14 @@ runtime macros/matchit.vim
 augroup vimrcEx
   autocmd!
 
+  " DROPBOX
+  autocmd BufNewFile,BufRead *
+    \ if expand('%:~') =~ '^\~/Dropbox' |
+    \   set noswapfile |
+    \ else |
+    \   set swapfile |
+    \ endif
+
   " When editing a file, always jump to the last known cursor position.
   " Don't do it for commit messages, when the position is invalid, or when
   " inside an event handler (happens when dropping a file on gvim).
