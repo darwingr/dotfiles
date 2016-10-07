@@ -304,6 +304,8 @@ nnoremap <Up> :echoe "Use k"<CR>
 inoremap <Up> <C-o>:throw "Use ESC k"<CR>
 nnoremap <Down> :echoe "Use j"<CR>
 inoremap <Down> <C-o>:throw "Use ESC j"<CR>
+nnoremap <Esc> :echoe "Use Use ^["<CR>
+inoremap <Esc> <C-o>:throw "Use ^["<CR>
 
 " Allow left and right navigation to wrap between lines
 set whichwrap+=<,>,h,l
@@ -316,5 +318,3 @@ set whichwrap+=<,>,h,l
 
 " niceties
 nnoremap ; :
-inoremap jj <ESC>
-
