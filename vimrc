@@ -24,6 +24,8 @@ set hlsearch      " turns on search highlighting, C-r for last search
 set showcmd
 set autowrite     " Automatically :write before running commands
 
+set wildmenu
+
 " jump xml tags
 runtime macros/matchit.vim
 
