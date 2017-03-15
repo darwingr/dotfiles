@@ -168,6 +168,9 @@ let &t_ZH="\e[3m"
 let &t_ZR="\e[23m"
 highlight Comment gui=italic cterm=italic
 
+" LaTeX conceal to utf8 glyphs
+let g:tex_conceal = ""
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-rspec mappings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -212,7 +215,8 @@ set tabstop=2
 set smarttab
 
 " Display extra whitespace
-set list listchars=tab:»·,trail:·,nbsp:·
+"set list listchars=tab:»·,trail:·,nbsp:·,eol:¬
+set list listchars=tab:\ \ ,trail:·,nbsp:·
 
 " Make it obvious where 80 characters is
 set colorcolumn=80
