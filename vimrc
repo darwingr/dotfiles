@@ -27,6 +27,21 @@ set autowrite     " Automatically :write before running commands
 set wildmenu
 set path+=**      " :find will fuzzy search recursively for file
 
+" Height of the command bar
+set cmdheight=1
+
+" Show matching brackets when text indicator is over them
+set showmatch
+
+" Set utf8 as standard encoding and en_US as the standard language
+set encoding=utf8
+
+" Use Unix as the standard file type
+set ffs=unix,dos,mac
+
+" Save on losing focus
+au FocusLost * :wa
+
 " jump xml tags
 runtime macros/matchit.vim
 
@@ -66,23 +81,8 @@ let g:ctrlp_custom_ignore = {
   \ 'file': '\.exe$\|\.so$\|\.dat$\|\.swp$\|\.zip$'
   \ }
 
-" Save on losing focus
-au FocusLost * :wa
-
 " Run commands that require an interactive shell
 nnoremap <Leader>r :RunInInteractiveShell<space>
-
-" Height of the command bar
-set cmdheight=1
-
-" Show matching brackets when text indicator is over them
-set showmatch
-
-" Set utf8 as standard encoding and en_US as the standard language
-set encoding=utf8
-
-" Use Unix as the standard file type
-set ffs=unix,dos,mac
 
 " Copy/Paste with system clipboard
 "set clipboard=unnamedplus
@@ -104,31 +104,6 @@ endif
 " Slow terminal vim
 set lazyredraw
 set ttyfast
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" CTags!!
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Index ctags from any project, including those outside Rails
-map <Leader>t :!ctags -R .<CR>
-
-" Show Tagbar current file
-nmap <Leader>b :TagbarToggle<CR>
-
-let g:tagbar_type_css = {
-\ 'ctagstype' : 'Css',
-    \ 'kinds'     : [
-        \ 'c:classes',
-        \ 's:selectors',
-        \ 'i:identities'
-    \ ]
-\ }
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" YouCompleteMe
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Compilation flags file required for C & C++
-let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf_global.py'
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -180,17 +155,6 @@ highlight Comment gui=italic cterm=italic
 
 " LaTeX conceal to utf8 glyphs
 let g:tex_conceal = ""
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" vim-rspec mappings
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"nnoremap <Leader>t :call RunCurrentSpecFile()<CR>
-nnoremap <Leader>s :call RunNearestSpec()<CR>
-nnoremap <Leader>l :call RunLastSpec()<CR>
-nnoremap <Leader>a :call RunAllSpec()<CR>
-
-" Run last session specs in currrent terminal (iTerm2 only)
-let g:rspec_runner = "os_x_iterm2"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Switching files, panes & windows
@@ -273,41 +237,6 @@ set t_Co=256
 "python powerline_setup()
 "python del powerline_setup
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Syntastic
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_mode_map = { 'passive_filetypes': ['html'] }
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-"let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
-let g:syntastic_eruby_ruby_quiet_messages =
-    \ {"regex": "possibly useless use of a variable in void context"}
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => NERDTree Settings
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Autopen NERDTree and focus cursor in new document (window on the right)
-"autocmd VimEnter * NERDTree
-autocmd VimEnter * wincmd p
-
-"autocmd StdinReadPre * let s:std_in=1
-"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-"shortcut to open NERDTree
-map <leader>n :NERDTreeToggle<CR>
-
-" Close vim if the only window left open is a NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
-"Show hidden files in NerdTree
-let NERDTreeShowHidden=1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Get off my lawn
@@ -332,3 +261,82 @@ set whichwrap+=<,>,h,l
 
 " niceties
 nnoremap ; :
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                             Plugin Configurations
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" CTags!!
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Index ctags from any project, including those outside Rails
+map <Leader>t :!ctags -R .<CR>
+
+" Show Tagbar current file
+nmap <Leader>b :TagbarToggle<CR>
+
+let g:tagbar_type_css = {
+\ 'ctagstype' : 'Css',
+    \ 'kinds'     : [
+        \ 'c:classes',
+        \ 's:selectors',
+        \ 'i:identities'
+    \ ]
+\ }
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => NERDTree Settings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Autopen NERDTree and focus cursor in new document (window on the right)
+"autocmd VimEnter * NERDTree
+autocmd VimEnter * wincmd p
+
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+"shortcut to open NERDTree
+map <leader>n :NERDTreeToggle<CR>
+
+" Close vim if the only window left open is a NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+"Show hidden files in NerdTree
+let NERDTreeShowHidden=1
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Syntastic
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_mode_map = { 'passive_filetypes': ['html'] }
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
+"let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
+let g:syntastic_eruby_ruby_quiet_messages =
+    \ {"regex": "possibly useless use of a variable in void context"}
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim-rspec mappings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"nnoremap <Leader>t :call RunCurrentSpecFile()<CR>
+nnoremap <Leader>s :call RunNearestSpec()<CR>
+nnoremap <Leader>l :call RunLastSpec()<CR>
+nnoremap <Leader>a :call RunAllSpec()<CR>
+
+" Run last session specs in currrent terminal (iTerm2 only)
+let g:rspec_runner = "os_x_iterm2"
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" YouCompleteMe
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Compilation flags file required for C & C++
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf_global.py'
+
