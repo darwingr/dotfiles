@@ -108,7 +108,7 @@ set ttyfast
 " CTags!!
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Index ctags from any project, including those outside Rails
-map <Leader>ct :!ctags -R .<CR>
+map <Leader>t :!ctags -R .<CR>
 
 " Show Tagbar current file
 nmap <Leader>b :TagbarToggle<CR>
@@ -171,7 +171,7 @@ highlight Comment gui=italic cterm=italic
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-rspec mappings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <Leader>t :call RunCurrentSpecFile()<CR>
+"nnoremap <Leader>t :call RunCurrentSpecFile()<CR>
 nnoremap <Leader>s :call RunNearestSpec()<CR>
 nnoremap <Leader>l :call RunLastSpec()<CR>
 nnoremap <Leader>a :call RunAllSpec()<CR>
