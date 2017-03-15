@@ -89,6 +89,7 @@ DEFAULT_USER=`whoami`
 export CLICOLOR=1
 # Set colors to match iTerm2 Terminal Colors
 #export TERM=xterm-256color   # docker-machine ssh uses "xterm"
+export COLORTERM=truecolor
 # iterm shell integration
 source ~/.iterm2_shell_integration.`basename $SHELL`
 
@@ -156,7 +157,7 @@ function docker-env() {
 # relink openssl `&& brew unlink openssl && brew link openssl --overwrite --force`
 function brewfresh() {
   brew update
-  brew upgrade #--cleanup
+  brew upgrade --cleanup
   # brew ls --unbrewed
   brew doctor
   brew ls --pinned --versions
@@ -198,6 +199,9 @@ alias sshmonolith="ssh -t monolith \"cd /Groups/monolith; exec \$SHELL --login\"
 #alias rsync="rsync -E"
 #alias scp="scp -E"
 alias bins="ls /usr/bin /usr/sbin /bin /sbin"
+alias link_documents=". $HOME/Code/scripts/link_documents.sh"
+alias ducks="du -cksh * | sort -rn | head -11"
+alias tree="tree -C"
 
 # aliases
 [[ -f ~/.aliases ]] && source ~/.aliases
