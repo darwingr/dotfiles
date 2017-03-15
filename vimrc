@@ -25,6 +25,7 @@ set showcmd
 set autowrite     " Automatically :write before running commands
 
 set wildmenu
+set path+=**      " :find will fuzzy search recursively for file
 
 " jump xml tags
 runtime macros/matchit.vim
@@ -112,6 +113,15 @@ map <Leader>t :!ctags -R .<CR>
 
 " Show Tagbar current file
 nmap <Leader>b :TagbarToggle<CR>
+
+let g:tagbar_type_css = {
+\ 'ctagstype' : 'Css',
+    \ 'kinds'     : [
+        \ 'c:classes',
+        \ 's:selectors',
+        \ 'i:identities'
+    \ ]
+\ }
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " YouCompleteMe
@@ -310,8 +320,6 @@ nnoremap <Up> :echoe "Use k"<CR>
 inoremap <Up> <C-o>:throw "Use ESC k"<CR>
 nnoremap <Down> :echoe "Use j"<CR>
 inoremap <Down> <C-o>:throw "Use ESC j"<CR>
-nnoremap <Esc> :echoe "Use Use ^["<CR>
-inoremap <Esc> <C-o>:throw "Use ^["<CR>
 
 " Allow left and right navigation to wrap between lines
 set whichwrap+=<,>,h,l
