@@ -1,3 +1,19 @@
+# .zshrc
+#
+# Sourced in all interactive shells (including login shells).
+#
+# Should be used for:
+#   - set up aliases
+#   - set up functions
+#   - set up keybindings
+#   - setting options for interactive shell (setopt, unsetopt)
+#   - set HISTORY options
+#   - change prompt
+#   - set up completions
+#   - set variables only used in interactive shell (LS_COLOR)
+echo "Sourcing ~/.zshrc"
+
+
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
