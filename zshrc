@@ -57,12 +57,16 @@ HIST_STAMPS="yyyy-mm-dd"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+# Skip the verification of insecure directories for completions.
+# ...Not zsh's job.
+ZSH_DISABLE_COMPFIX="true"
+
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 
-plugins=(colored-man-pages git rails)
+plugins=(git rails)
 
 # catimg - show image in terminal
 # common-aliases - just that
@@ -138,20 +142,6 @@ fi
 function docker-env() {
   eval $(docker-machine env $1);
 }
-
-# coloured man pages
-#man() {
-#    env \
-#    LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-#    LESS_TERMCAP_md=$(printf "\e[1;31m") \
-#    LESS_TERMCAP_me=$(printf "\e[0m") \
-#    LESS_TERMCAP_se=$(printf "\e[0m") \
-#    LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-#    LESS_TERMCAP_ue=$(printf "\e[0m") \
-#    LESS_TERMCAP_us=$(printf "\e[1;32m") \
-#    PAGER=/usr/bin/less \
-#    man "$@"
-#}
 
 # Slow Git
 # Resolving slow prompt on large repositories
