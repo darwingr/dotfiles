@@ -121,9 +121,11 @@ export CLICOLOR=1
 # Set colors to match iTerm2 Terminal Colors
 export COLORTERM=truecolor    # 24-bit color (16 million color palette)
 #export TERM=xterm-256color   # docker-machine ssh uses "xterm"
-export COLORTERM=truecolor
-# iterm shell integration
-source ~/.iterm2_shell_integration.`basename $SHELL`
+
+# iTerm shell integration
+if [[ "$TERM_PROGRAM" == "iTerm.app" ]]; then
+  source ~/.iterm2_shell_integration.`basename $SHELL`
+fi
 
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 export PATH="/usr/local/sbin:$PATH"
@@ -220,9 +222,11 @@ function xcode-agree() {
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias md2word=md2word # alias the function below
 alias sshmonolith="ssh -t monolith \"cd /Groups/monolith; exec \$SHELL --login\""
-# preserve file tags, if osx
-#alias rsync="rsync -E"
-#alias scp="scp -E"
+# preserve file tags, if macOS
+if [[ "$(uname)" == "Darwin" ]]; then
+  alias rsync="rsync -E"
+  alias scp="scp -E"
+fi
 alias bins="ls /usr/bin /usr/sbin /bin /sbin"
 alias link_documents=". $HOME/Code/scripts/link_documents.sh"
 alias ducks="du -cksh * | sort -rn | head -11"
