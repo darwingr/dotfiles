@@ -46,3 +46,6 @@ Session.vim
 tags
 !tags/
 gems.tags
+
+# Compilation Database (YouCompleteMe arguments to compiler)
+compile_commands.json
