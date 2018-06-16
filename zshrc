@@ -14,6 +14,8 @@
 echo "Sourcing ~/.zshrc"
 
 
+# BEGIN oh-my-zsh configuration
+
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -66,7 +68,10 @@ ZSH_DISABLE_COMPFIX="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 
-plugins=(git rails)
+plugins=(
+  git
+  rails
+)
 
 # catimg - show image in terminal
 # common-aliases - just that
@@ -79,10 +84,12 @@ plugins=(git rails)
 # git-extras - adds some nice git completions
 # git-flow - completions for git-flow
 
-# User configuration
-# export MANPATH="/usr/local/man:$MANPATH"
-
 source $ZSH/oh-my-zsh.sh
+
+# END oh-my-zsh configuration
+
+
+# export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -105,9 +112,14 @@ DEFAULT_USER=`whoami`
 #BASE16_SHELL="$HOME/.config/base16-shell/base16-atelierdune.dark.sh"
 #BASE16_SHELL="$HOME/.config/base16-shell/solarized.dark.sh"
 #[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
-# Set CLICOLOR if you want Ansi Colors in iTerm2
+
+# Set CLICOLOR if you want
+#   - Ansi Colors in iTerm2
+#   - Colored output for ls
 export CLICOLOR=1
+
 # Set colors to match iTerm2 Terminal Colors
+export COLORTERM=truecolor    # 24-bit color (16 million color palette)
 #export TERM=xterm-256color   # docker-machine ssh uses "xterm"
 export COLORTERM=truecolor
 # iterm shell integration
@@ -188,6 +200,13 @@ function mkcd() {
 function pbsend() {
   pbpaste | ssh "$@" pbcopy
 }
+
+function xcode-agree() {
+  sudo xcodebuild -license accept
+}
+
+
+### Aliases ###
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
