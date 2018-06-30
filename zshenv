@@ -32,6 +32,14 @@ fi
 #   Cannot be a function for it to work with vim shortcut: shift+k
 #   Can be placed in .zshrc or .zshenv
 #
+# NOTE on terminal coloring.
+# https://misc.flogisoft.com/bash/tip_colors_and_formatting
+# Test like `echo -e "\e[31mHello World\e[0m"`.
+#
+# NOTE on some codes:
+#   1 bold, 2 dim, 4 underlined
+#   31 red, 32 green, 33 yellow, 34 blue, 35 magenta
+#   Starting with `[38;5;` selects color from the 256 color set.
 PAGER=/usr/bin/less
 PAGER="${commands[less]:-$PAGER}"
 export LESS_TERMCAP_mb=$(printf "\e[1;31m")     # begin blinking
