@@ -215,6 +215,7 @@ alias bins="ls /usr/bin /usr/sbin /bin /sbin"
 alias link_documents=". $HOME/Code/scripts/link_documents.sh"
 alias ducks="du -cksh * | sort -rn | head -11"
 alias tree="tree -C"
+alias plist="/usr/libexec/PlistBuddy"
 
 # aliases
 [[ -f ~/.aliases ]] && source ~/.aliases
