@@ -126,7 +126,7 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 # Elixir
 if which exenv > /dev/null; then eval "$(exenv init -)"; fi
 # Python
-#if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 #if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
 export WORKON_HOME=$HOME/.virtualenvs
 #source /usr/local/bin/virtualenvwrapper.sh
