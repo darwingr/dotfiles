@@ -1,0 +1,226 @@
+# Brewfile.migrating
+#   A working file for migrating from an unused Brewfile (renamed to
+#   Brewfile.old) to the new Brewfile that works on the system.
+
+tap "beeftornado/rmtree"
+tap "homebrew/bundle"
+tap "homebrew/cask"
+tap "homebrew/core", "git@github.com:Homebrew/homebrew-core.git"
+tap "homebrew/dupes"
+tap "homebrew/php"
+tap "homebrew/services"
+tap "universal-ctags/universal-ctags"
+
+brew "git"
+# before installing ruby
+#autoconf libressl openssl readline libtool automake libffi libyaml lzlib
+#sphinx-doc
+#gdbm
+#sqlite
+#python@2
+#python
+#pyenv
+#gmp
+#ruby-build rbenv
+
+#brew "highlight"
+#brew "ncurses"
+#brew "htop", args: ["with-ncurses"]
+#brew "icu4c"
+#brew "libtool"
+#brew "imagemagick", args: ["with-ghostscript"]
+brew "openssl"
+#brew "iperf3"
+#brew "oniguruma"
+#brew "jq"
+#brew "libarchive"
+#brew "libevent"
+brew "libffi"
+#brew "libgpg-error"
+#brew "libgcrypt"
+#brew "liblwgeom"
+#brew "memcached", args: ["with-sasl"]
+#brew "libmemcached"
+brew "libressl"
+#brew "libspatialite"
+#brew "libtermkey"
+#brew "libuv"
+#brew "libvterm"
+brew "libyaml"
+brew "lzlib"
+#brew "lzo"
+#brew "mackup"
+#brew "macvim"
+#brew "makefile2graph"
+#brew "markdown"
+#brew "mosh"
+#brew "msgpack"
+#brew "mysql", restart_service: true
+#brew "neofetch"
+#brew "nginx"
+#brew "nmap"
+#brew "openssl@1.1"
+#brew "pandoc"
+#brew "perl"
+#brew "php@7.1"
+#brew "pkg-config"
+#brew "postgis"
+brew "pyenv"
+brew "python@2"
+#brew "qt"
+#brew "ruby-build"
+#brew "rbenv"
+brew "reattach-to-user-namespace"
+#brew "redis"
+#brew "ruby", link: true
+#brew "shellcheck"
+#brew "spim"
+#brew "sqliteodbc"
+#brew "squashfs"
+#brew "ssh-copy-id"
+#brew "tag"
+#brew "terminal-notifier"
+#brew "tmux"
+#brew "tree"
+#brew "unar"
+#brew "unibilium"
+#brew "unrar"
+#brew "utf8proc"
+#brew "wget"
+#brew "wireshark", args: ["with-qt"]
+#brew "youtube-dl"
+brew "universal-ctags/universal-ctags/universal-ctags", args: ["HEAD"]
+
+
+#############
+# Reinstalled to date
+
+autoconf
+automake
+gdbm
+ghostscript
+git
+gmp
+gettext
+jansson
+jpeg
+libffi
+libressl
+libtool
+libyaml
+lzlib
+openssl
+readline
+pkg-config
+pyenv
+python
+python@2
+rbenv
+ruby
+ruby-build
+reattach-to-user-namespace
+sqlite
+sphinx-doc
+xz
+libtiff
+pcre2
+webp
+libpng
+
+
+### To be uninstalled
+
+heroku
+highlight
+htop
+icu4c
+imagemagick
+iperf3
+jemalloc
+jq
+json-c
+lame
+libarchive
+libevent
+libgcrypt
+libgeotiff
+libgpg-error
+libidn2
+liblwgeom
+libmemcached
+libpq
+libsodium
+libspatialite
+libtasn1
+libtermkey
+libtiff
+libunistring
+libuv
+libvterm
+libxml2
+libzip
+little-cms2
+llvm35
+lua
+luajit
+lzo
+mackup
+macvim
+makefile2graph
+markdown
+mcrypt
+memcached
+mhash
+mobile-shell
+mosh
+mpfr
+msgpack
+mysql
+ncurses
+neofetch
+nettle
+nginx
+nmap
+node
+oniguruma
+openjpeg
+openssl@1.1
+p11-kit
+pandoc
+pcre
+perl
+phantomjs
+php71
+php71-imagick
+php@7.1
+postgis
+postgresql
+proj
+protobuf
+qt
+qt5
+qt55
+qt@5.5
+redis
+screenresolution
+sfcgal
+shellcheck
+spim
+sqliteodbc
+squashfs
+ssh-copy-id
+tag
+terminal-notifier
+tmux
+tree
+unar
+unibilium
+unixodbc
+unrar
+utf8proc
+wget
+wireshark
+wxmac
+x264
+xvid
+youtube-dl
