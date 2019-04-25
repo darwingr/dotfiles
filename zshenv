@@ -1,15 +1,29 @@
-# .zshenv
-#
-# Sourced on all invocations of the shell, unless the -f option is set.
-# Should contain exported variables that should be available to other programs.
-#   - set the command search path, $PATH
-#   - $EDITOR
-#   - $PAGER
-#
-# Should NOT contain commands that:
-#   - produce output or
-#   - assume the shell is attached to a tty.
-echo "Sourcing ~/.zshenv"
+## .zshenv
+##
+## Sourced on all invocations of the shell, unless the -f option is set.
+## Read even when Zsh is launched to run a single command (with the -c option),
+## even by another tool like make.
+## Therefore, KEEP THIS FILE SHORT.
+##
+## Should contain exported variables that should be available to other programs,
+## and are updated often.
+##   - set the command search path, $PATH
+##   - $EDITOR
+##   - $PAGER
+##   - ${RB,EX,PY}ENV_ROOT for git-checkout installations (not homebrew).
+##     ...according to pyenv's readme.
+##
+## Should NOT contain commands that:
+##   - produce output or
+##   - assume the shell is attached to a tty.
+##
+## Sourced after `/etc/zshenv` and before any other user startup files.
+##  - man zsh
+##  - zsh -l -o sourcetrace
+##  - https://github.com/rbenv/rbenv/wiki/Unix-shell-initialization
+##
+#echo "Sourcing ~/.zshenv"
+
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8

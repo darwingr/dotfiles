@@ -1,16 +1,27 @@
-# .zshrc
-#
-# Sourced in all interactive shells (including login shells).
-#
-# Should be used for:
-#   - set up aliases
-#   - set up functions
-#   - set up keybindings
-#   - setting options for interactive shell (setopt, unsetopt)
-#   - set HISTORY options
-#   - change prompt
-#   - set up completions
-#   - set variables only used in interactive shell (LS_COLOR)
+## .zshrc
+##
+## Sourced in all interactive shells (including login shells).
+##
+## Should be used for:
+##   - set up aliases
+##   - set up functions
+##   - set up keybindings
+##   - setting options for interactive shell (setopt, unsetopt)
+##   - set HISTORY options
+##   - change prompt
+##   - set up completions
+##   - set variables only used in interactive shell (LS_COLOR)
+##
+## Sourced after `.zprofile` and before `.zlogin`.
+## Order on my mac on new terminal tab or SSH session:
+##  1 /etc/zshenv
+##    ~/.zshenv
+##  2 /etc/zprofile (calls path_helper)
+##        Prepends paths from /etc/paths and /etc/paths.d/
+##    ~/.zprofile
+##  3 /etc/zshrc
+##    ~/.zshrc
+##
 echo "Sourcing ~/.zshrc"
 
 
@@ -68,16 +79,22 @@ ZSH_DISABLE_COMPFIX="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 
+# NOTE pyenv and rbenv are the cause for PATH clutter, which is acceptable.
 plugins=(
-  git
-  rails
+#  dotenv        # Automatically load your project ENV variables from .env
+  git           # Adds cmd aliases and functions for current branch
+  nmap          # Meaningful aliases for nmap
+  rbenv         # Initializes rbenv environment and set version in prompt
+  pyenv         # Initializes pyenv environment and set version in prompt
+                # Appends the pyenv bin dir to PATH if no pyenv command
+  virtualenv    # Creates virtualenv_prompt_info function to use in your theme
+  zsh_reload    # `src` - Function to reload the zsh session
 )
 
 # catimg - show image in terminal
 # common-aliases - just that
 # colored-man-pages - sets LESS_TERMCAP colors for man
 # rails - rails/rake aliases
-# git - adds cmd aliases and functions for current branch
 # gitfast - replaces git because it's slow
 # git-auto-status - ??
 # git-prompt - ??
@@ -102,8 +119,15 @@ DEFAULT_USER=`whoami`
 #   - Colored output for ls
 export CLICOLOR=1
 
-# Set colors to match iTerm2 Terminal Colors
-export COLORTERM=truecolor    # 24-bit color (16 million color palette)
+# Should be set by terminal application to advertise color support.
+#   - but not over ssh?
+# Sets colors to match iTerm2 Terminal Colors
+# Terminal.app does not support truecolor, does not set COLORTERM.
+# export COLORTERM='truecolor'    # 24-bit color (16 million color palette)
+
+# Should be set by terminal application, no need to set here.
+#   Expected default: 'xterm-256color'
+#   Vim also expects this.
 #export TERM=xterm-256color   # docker-machine ssh uses "xterm"
 
 # iTerm shell integration
@@ -194,16 +218,6 @@ function xcode-agree() {
 
 ### Aliases ###
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# https://www.digitalocean.com/community/tutorials/an-introduction-to-useful-bash-aliases-and-functions
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
 alias md2word=md2word # alias the function below
 alias sshmonolith="ssh -t monolith \"cd /Groups/monolith; exec \$SHELL --login\""
 # preserve file tags, if macOS
