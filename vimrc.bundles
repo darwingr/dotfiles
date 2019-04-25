@@ -36,7 +36,6 @@ Plug 'elixir-lang/vim-elixir'
 Plug 'Glench/Vim-Jinja2-Syntax'
 
 " Syntax Checking
-Plug 'scrooloose/syntastic'
 Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
 
 " Project
