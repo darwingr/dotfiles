@@ -3,76 +3,211 @@
 "   :PlugUpdate
 " To uninstall, comment out and run
 "   :PlugClean
+let s:plugin_dir = '~/.vim/bundle'
+if ! isdirectory(expand(s:plugin_dir))
+  let g:PluginFileLoaded=0
+  echom "Plugin dir does not exist, plugins not loaded."
+  finish
+endif
+
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
 if &compatible
   set nocompatible
 end
 
+" Install Guards (not loading guards)
+"   - has('python3')
+"   - executable('cmake')
+" See link
+"   https://git.cse.iitb.ac.in/murukesh/vimrc/commit/8ea2d08f9cfb3e94df682ba00d88f32e989c7d30
 function! BuildYCM(info)
-  " name:   name of plugin
-  " status: 'installed', 'updated', or 'unchanged'
-  " force:  set on PlugInstall! or PlugUpdate!
+  " info is a dictionary with 3 fields:
+  "   - name:   name of plugin
+  "   - status: 'installed', 'updated', or 'unchanged'
+  "   - force:  set on PlugInstall! or PlugUpdate!
+  "             :PlugUpdate! YouCompleteMe
   " Will be executed inside the directory of the plugin
   if a:info.status == 'installed' || a:info.force
-    !./install.py
-        \ --clang-completer
-        \ --tern-completer
+      "'--clang-completer',
+    let l:completers = [
+      \ '--clangd-completer']
+      " needs Java 11
+      "\ '--java-completer',
+    " clangd is experimental, not installed with --all
+    " will be preferred over libclang when enabled together
+    "if executable('node') && executable('npm')
+    "  add(l:completers, '--ts-completer')
+    "endif
+
+    " Don't trust "!python3",
+    "   we want to use python compiled with vim!!!
+    "let l:vimpython3 = py3eval("sys.exec_prefix") . "/bin/python3"
+    " Homebrew python
+    let l:vimpython3 = "$(brew --prefix)/bin/python3"
+    let l:install_cmd = "!" . vimpython3 . ' install.py ' . join(l:completers)
+    echom l:install_cmd
+    execute l:install_cmd
+
+    " XXX Fails: sys.executable does not return python path
+    " Importing sys is done by default
+    " vim.eval(str) behaves based on the vim-type of str
+    " equiv of python2 execfile
+    " https://stackoverflow.com/questions/436198/what-is-an-alternative-to-execfile-in-python-3
+    "python3 print(sys.version)
+    "python3 import os
+    "python3 import vim
+    "python3 import runpy
+    "python3 filepath = './install.py'
+    "python3 sys.argv[0] = filepath
+    "python3 sys.argv.extend(vim.eval('l:completers'))
+    "python3 runpy.run_path(filepath)
   endif
 endfunction
 
-call plug#begin('~/.vim/bundle')
+call plug#begin(s:plugin_dir)
 "Plug 'tpope/vim-sensible'
+Plug 'junegunn/vim-plug'  " Help files for Plug
+Plug 'tweekmonster/startuptime.vim', { 'on': 'StartupTime' }
+" Vim Excellence video, be faster at vim
+"Plug 'ThePrimeagen/vim-apm'    " requires neovim
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'christoomey/vim-run-interactive'
+"Plug 'christoomey/vim-run-interactive'
 " http://vimawesome.com/plugin/vim-test-all-too-well
 " Plug 'janko-m/vim-test'
 Plug 'tpope/vim-dispatch'
+Plug 'skywind3000/asyncrun.vim'
+
+" Swap your windows without ruining your layout
+"   Usage: <leader>ww
+"     then <leader>ww on other window
+Plug 'wesQ3/vim-windowswap'
 
 " Syntax Color
-Plug 'kchmck/vim-coffee-script'
+Plug 'kchmck/vim-coffee-script', {'for':  ['coffee', 'js']}
 Plug 'elixir-lang/vim-elixir'
 Plug 'Glench/Vim-Jinja2-Syntax'
+"Plug 'octol/vim-cpp-enhanced-highlight', { 'for': 'cpp' }
+Plug 'bfrg/vim-cpp-modern', { 'for': ['cpp', 'c'] }
+Plug 'chr4/nginx.vim'     " includes ERB/Jinja syntax detection by <%
+"     Detects nginx ft via filename.
+"             https://github.com/chr4/nginx.vim/blob/master/ftdetect/nginx.vim
+Plug 'chr4/sslsecure.vim' " bad cipher highlighing
+Plug 'udalov/kotlin-vim'
+"Plug 'hdiniz/vim-gradle'
 
 " Syntax Checking
-Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
+"Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
+Plug 'itspriddle/vim-shellcheck'  " set :compiler shellcheck
+
+" Dart: ft detection, syntax highlighting and indentation
+Plug 'dart-lang/dart-vim-plugin'
+
+" LSP
+Plug 'natebosch/vim-lsc'
+Plug 'natebosch/vim-lsc-dart'
+
+
+" You Complete Me
+" update alone :PlugUpdate! YouCompleteMe
+" NB does not require boost.cpp
+" Do not update unless explicitly specified
+Plug 'ycm-core/YouCompleteMe',
+  \ { 'frozen': 1, 'do': function('BuildYCM'), 'for': ['c', 'cpp', 'make'] }
+  Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
+" Enable auto-completion using the tab key
+"Plug 'ajh17/VimCompletesMe'
+
+"Plug 'gauteh/vim-cppman'
+
+" Alternate Files quickly
+" :A, :AS, :AV to switch
+"Plug 'vim-scripts/a.vim'  ", { 'for': ['c', 'cpp'] }
+Plug 'darwingr/a.vim'
+"Plug 'derekwyatt/vim-fswitch'
+"Plug 'LucHermitte/alternate-lite' " lazy loads automatically
+"  Plug 'LucHermitte/lh-vim-lib'   " Required
 
 " Project
-""""Plug 'ctrlpvim/ctrlp.vim'
-Plug 'tpope/vim-eunuch' " Unix commands
+Plug 'editorconfig/editorconfig-vim'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'ludovicchabant/vim-gutentags', { 'commit': '31c0ead' }
+Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-Plug 'ledger/vim-ledger'
+"Plug 'ledger/vim-ledger'
 Plug 'pbrisbin/vim-mkdir'
-Plug 'scrooloose/nerdtree'
-Plug 'tpope/vim-projectionist'
-Plug 'majutsushi/tagbar'
+Plug 'tpope/vim-eunuch'          " Safe Unix commands :Move, :Rename, :Mkdir...
+" Copied from vim-plug creator to get vim to load faster with nerdtree
+Plug 'scrooloose/nerdtree' , { 'on': 'NERDTreeToggle' }
+  augroup nerd_loader
+    autocmd!
+    autocmd VimEnter * silent! autocmd! FileExplorer
+    autocmd BufEnter,BufNew *
+          \  if isdirectory(expand('<amatch>'))
+          \|   call plug#load('nerdtree')
+          \|   execute 'autocmd! nerd_loader'
+          \| endif
+  augroup END
+"Plug 'tpope/vim-projectionist'
+"Plug 'derekwyatt/vim-fswitch'   " Switch between c/cpp and h/hpp
+Plug 'mileszs/ack.vim'
+if executable('ag')   " Prefer the Silver Searcher if available
+  let g:ackprg = 'ag --vimgrep'
+endif
+
+" Env
+"   Unnecessary, should be handled by the shell
+"Plug 'tpope/vim-dotenv'
 
 " Editing
 Plug 'Raimondi/delimitMate'
-Plug 'mattn/emmet-vim'
+" WebDev Snippets, not really used and relatively slow to load
+"   see source for more filetypes
+Plug 'mattn/emmet-vim',
+  \ { 'for': ['css', 'html', 'javascript', 'tsx', 'jsx', 'xml'] }
+" causes problems with conceallevel in markdown where italic and bold symbols
+" are hidden. Override with `set conceallevel=0`
 Plug 'Yggdroot/indentLine'
 "Plug 'terryma/vim-multiple-cursors'
-Plug 'darfink/vim-plist'
-Plug 'tpope/vim-surround'
-" update alone :PlugUpdate YouCompleteMe
-Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+Plug 'tpope/vim-surround'       " to add/change/delete surrounding delimiters
+                                " using s} / cs)} / ds} by line or by word: iw
 
 " Ruby
 "Plug 'tpope/vim-bundler'
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-rake'
-Plug 'thoughtbot/vim-rspec'
-Plug 'vim-ruby/vim-ruby'
+Plug 'tpope/vim-endwise', { 'for': 'ruby' }
+Plug 'tpope/vim-rails', { 'for': 'ruby' }
+"Plug 'tpope/vim-rake', { 'for': 'ruby' }
+Plug 'thoughtbot/vim-rspec', { 'for': 'ruby' }
+Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 "Plug 'slim-template/vim-slim'
 "Plug 'tpope/vim-repeat'
 "Plug 'vim-scripts/tComment'
+" VS vim-ruby-xmpfilter from Avdi's RubyTappas
+"Plug 'vim-seeing-is-believing'
 
 " colorschemes
 Plug 'chriskempson/base16-vim'
 Plug 'altercation/vim-colors-solarized'
+"Plug 'ericbn/vim-solarized'
+Plug 'morhetz/gruvbox'
+
+" Extra
+Plug 'zerowidth/vim-copy-as-rtf'          " Export to Word with :CopyRTF
+Plug 'osyo-manga/vim-over'                " Substitution previewing
+
+" Structured File Types
+"Plug 'darfink/vim-plist'
+" Better ft detect with no changing to xml
+Plug 'alex-ac/vim-plist', { 'for': ['plist', 'xml'] }
+Plug 'chrisbra/csv.vim'     " Filetype plugin for csv files
+"Plug 'godlygeek/tabular'    " text filtering and alignment
 
 if filereadable(expand("~/.vimrc.bundles.local"))
   source ~/.vimrc.bundles.local
