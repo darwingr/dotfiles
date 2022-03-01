@@ -1,1 +1,7 @@
-gem: --no-rdoc
+gem:
+ - --no-rdoc
+ - --no-document
+ # Install/Uninstall/Cleanup in user’s home directory instead of GEM_HOME.
+ # Issues: https://guides.rubygems.org/faqs/#user-install
+ #  doesn't work with ASDF
+ #- --user-install
