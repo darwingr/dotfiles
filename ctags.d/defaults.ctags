@@ -1,0 +1,86 @@
+# Universal CTags only!
+--recurse=yes
+--tag-relative=yes
+
+# One regex per line, can't comma separate
+--exclude=.ycm_extra_conf.py
+--exclude=*.swp
+--exclude=*.log
+--exclude=*.html
+--exclude=*.md
+--exclude=*.dSYM/*
+--exclude=.git/*
+--exclude=vendor/*
+--exclude=db/*
+--exclude=log/*
+--exclude=public/*
+--exclude=build/*
+--exclude=temp/*
+--exclude=tmp/*
+--exclude=node_modules
+--exclude=given
+
+# C++     : cpp.ctags
+#
+#   The fields are to track:
+#     +l  the language, is necessary for YouCompleteMe to use ctags
+#     +i  Inheritance info
+#     +a  Access/export level of class members
+#     +S  Signature (prototype, parameters)
+--fields=+liaS
+#   The c++-kinds=+p adds entries for the prototype to the tags file as well.
+--c++-kinds=+p
+#   The extra +q forces full namespace qualified tags to be stored as well.
+--extras=+q
+
+# C       : c.ctags
+#
+# Headers source.h should be detected as the same language the paired source
+# file (e.g. source.cpp, source.m, source.c), otherwise or wherever there is a
+# conflict it should default to C to be safe.
+#--langmap=C:.c.h
+# Entries for C prototypes
+# --c-kinds=+p
+
+
+# Possibly already implemented, uncomment if necessary
+#--regex-ruby=/(^|[:;])[ \t]*([A-Z][[:alnum:]_]+) *=/\2/c,class,constant/
+#--regex-ruby=/^[ \t]*attr_(reader|writer|accessor) (:[a-z0-9_]+, )*:([a-z0-9_]+)/\3/P,attr/
+
+# Reuses kind letter, uncomment if necessary
+#--regex-ruby=/(^|;)[ \t]*(private|protected|public)(_class_method)?\(? def *(self.)?([[:alnum:]_]+)/\5/f,InlineScopedMethod,InlineScopedMethods (Ruby 2.1+)/
+#--regex-ruby=/(^|;)[ \t]*expose\(? *:([[:alnum:]_]+)/\2/f,function,exposure/
+#--regex-ruby=/(^|;)[ \t]*event\(? *:([[:alnum:]_]+)/\2/f,function,aasm_event/
+#--regex-ruby=/(^|;)[ \t]*event\(? *:([[:alnum:]_]+)/\2!/f,function,aasm_event/
+#--regex-ruby=/(^|;)[ \t]*event\(? *:([[:alnum:]_]+)/\2?/f,function,aasm_event/
+#--regex-ruby=/(^|;)[ \t]*(has_many|belongs_to|has_one|has_and_belongs_to_many)\(? *:([[:alnum:]_]+)/\3/f,association,Active Record association/
+#--regex-ruby=/(^|;)[ \t]*(named_)?scope\(? *:([[:alnum:]_]+)/\3/f,scope,ActiveRecord scope/
+
+
+# Already defined, uncomment if necessary
+#--langdef=Elixir
+#--langmap=Elixir:.ex.exs
+#--regex-Elixir=/^[ \t]*def(p?)[ \t]+([a-z_][a-zA-Z0-9_?!]*)/\2/f,functions,functions (def ...)/
+#--regex-Elixir=/^[ \t]*defcallback[ \t]+([a-z_][a-zA-Z0-9_?!]*)/\1/c,callbacks,callbacks (defcallback ...)/
+#--regex-Elixir=/^[ \t]*defdelegate[ \t]+([a-z_][a-zA-Z0-9_?!]*)/\1/d,delegates,delegates (defdelegate ...)/
+#--regex-Elixir=/^[ \t]*defexception[ \t]+([A-Z][a-zA-Z0-9_]*\.)*([A-Z][a-zA-Z0-9_?!]*)/\2/e,exceptions,exceptions (defexception ...)/
+#--regex-Elixir=/^[ \t]*defimpl[ \t]+([A-Z][a-zA-Z0-9_]*\.)*([A-Z][a-zA-Z0-9_?!]*)/\2/i,implementations,implementations (defimpl ...)/
+#--regex-Elixir=/^[ \t]*defmacro(p?)[ \t]+([a-z_][a-zA-Z0-9_?!]*)\(/\2/a,macros,macros (defmacro ...)/
+#--regex-Elixir=/^[ \t]*defmacro(p?)[ \t]+([a-zA-Z0-9_?!]+)?[ \t]+([^ \tA-Za-z0-9_]+)[ \t]*[a-zA-Z0-9_!?!]/\3/o,operators,operators (e.g. "defmacro a <<< b")/
+#--regex-Elixir=/^[ \t]*defmodule[ \t]+([A-Z][a-zA-Z0-9_]*\.)*([A-Z][a-zA-Z0-9_?!]*)/\2/m,modules,modules (defmodule ...)/
+#--regex-Elixir=/^[ \t]*defprotocol[ \t]+([A-Z][a-zA-Z0-9_]*\.)*([A-Z][a-zA-Z0-9_?!]*)/\2/p,protocols,protocols (defprotocol...)/
+#--regex-Elixir=/^[ \t]*Record\.defrecord[ \t]+:([a-zA-Z0-9_]+)/\1/r,records,records (defrecord...)/
+#--regex-Elixir=/^[ \t]*test[ \t]+\"([a-z_][a-zA-Z0-9_?! ]*)\"*/\1/t,tests,tests (test ...)/
+
+--langdef=CoffeeScript
+--langmap=CoffeeScript:.coffee
+--regex-CoffeeScript=/(^|=[ \t])*class ([A-Za-z.]+)( extends [A-Za-z.]+)?$/\2/c,class/
+--regex-CoffeeScript=/^[ \t]*@?([A-Za-z.]+):.*[-=]>.*$/\1/f,function/ 
+--regex-CoffeeScript=/^[ \t]*([A-Za-z.]+)[ \t]+=.*[-=]>.*$/\1/f,function/
+--regex-CoffeeScript=/^[ \t]*([A-Za-z.]+)[ \t]+=[^-=>\n]*$/\1/v,variable/
+
+--languages=-javascript
+--langdef=js
+--langmap=js:.js
+--langmap=js:+.jsx
+--regex-js=/[ \t.]([A-Z][A-Z0-9._$]+)[ \t]*[=:][ \t]*([0-9"'\[\{]|null)/\1/n,constant/
