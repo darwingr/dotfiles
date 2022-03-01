@@ -1,6 +1,11 @@
 ## .aliases
 #
-# vim: set filetype=bash
+# vim: set filetype=bash:
+
+# Enable aliases for SUDO
+#   Aliases allow a string to be substituted for a word when it is used as the
+#   first word of a simple command. (from bash manual)
+alias sudo='sudo '
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -9,3 +14,100 @@
 #
 # https://www.digitalocean.com/community/tutorials/an-introduction-to-useful-bash-aliases-and-functions
 #
+alias mkdir="mkdir -p"
+alias top="top -o cpu"
+alias zshrc="vim ~/.zshrc"
+alias zshenv="vim ~/.zshenv"
+alias vimrc="vim ~/.vimrc"
+alias vimrcb="vim ~/.vimrc.bundles"
+alias vimup="vim +PlugUpgrade +qa && vimrcb +PlugUpdate"
+alias vimupy="vim +PlugUpgrade +qa && vimrcb +PlugUpdate \"+PlugUpdate! YouCompleteMe\""
+alias vimwhich"vim"
+function vimwhich() {
+  local first_arg="$1"
+  local last_arg="$argv[-1]"
+  local maybe_file="$(which $last_arg)"
+  if [ "$first_arg" == "-h" ]; then
+    print "vimwhich: finds and opens for editing executables found in PATH"
+    print "\tvimwhich [args for vim...] command_name"
+    print "\tvimwhich -h"
+  elif [ -f "$maybe_file" ]; then
+    unset 'argv[-1]'
+    vim "$@" "$maybe_file"
+  else
+    echo -n "Error: cannot find matching file/PATH executable for last argument"
+    echo    "$last_arg"
+    print "$(which -a $last_arg)"
+    return 1
+  fi
+}
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Want lexical-numeric sorting.
+#   Example Order: Lab1.pdf, Lab2.pdf, Lab10.pdf
+# This works but fails for long output ls -la and is not coloured.
+# ls | sort -t . -n -k1.4
+# This also works on mac but is not default, but via gnu coreutils
+# gls -lav
+# Sorts according to LC_COLLATE on MacOS if no sort is set '-f'
+#   -f to get case-insensitive sorting
+#if [[ -x "$(command -v gls)" ]]; then
+#  alias ls='gls -v'  # -O fails
+#fi
+# NB output must be sorted to account for 'hashed ordering' on APFS, omit -f
+alias   l='ls -GahOF'
+alias  ll='ls -GlahOF'
+alias lstree="ls -R | grep \":$\" | sed -e 's/:$//' -e 's/[^-][^\/]*\//–/g' -e 's/^/ /' -e 's/-/|/'"
+alias md2word=md2word # alias the function below
+alias sshmonolith="ssh -t monolith \"cd /Groups/monolith; exec \$SHELL --login\""
+if [[ "$(uname)" == "Darwin" ]]; then
+  # Preserve file tags on macOS
+  #alias rsync="rsync -E"
+  #alias scp="scp -E"
+  alias md5sum='md5 -r'
+  alias sha1sum='shasum'
+fi
+alias link_documents=". $HOME/Code/scripts/link_documents.sh"
+alias tree="tree -C"
+alias plist="/usr/libexec/PlistBuddy"
+alias airport="/System/Library/PrivateFrameworks/Apple80211.framework/"`
+             `"Versions/Current/Resources/airport"
+alias :q="exit"
+alias lockscreen='/System/Library/CoreServices/"Menu Extras"/User.menu/'`
+            `'Contents/Resources/CGSession -suspend'
+alias timestamp='date +%Y%m%d-%H%M%S'
+
+# Pretty print the path
+alias path='echo $PATH | tr -s ":" "\n"'
+
+# Show Interpreter Version
+show-python-version() {
+  local vname=""
+  local number="${1:-""}"
+  if type pyenv > /dev/null; then
+    vname="(pyenv: $(pyenv version-name)) > "
+  fi
+  echo -n "$vname$(python$number --version 2>&1 |tr -d '\n')"
+} 1>&2
+alias pip='show-python-version && pip'
+alias pip2='show-python-version 2 && pip2'
+alias pip3='show-python-version 3 && pip3'
+# Not great or necessary with asdf
+#show-ruby-version() {
+#  local vname=""
+#  if type rbenv > /dev/null
+#    then vname="(rbenv: $(rbenv version-name)) > "
+#  fi
+#  echo "$vname$(ruby --version|tr -d '\n')"
+#} 1>&2
+#alias gem='show-ruby-version && gem'
+
+# nproc is a linux command
+if ! [ -x "$(command -v nproc)" ]; then
+  alias nproc='sysctl -n hw.physicalcpu_max'
+fi
+alias make='make --jobs=$(nproc)'
+alias gmake='gmake --jobs=$(nproc)'
+
+alias gdg='git difftool --gui'
+alias gap='git add --patch'
