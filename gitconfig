@@ -1,6 +1,7 @@
 [user]
-  name = Darwin Groskleg
+  name = Darwin Jacob Groskleg
   email = darwingroskleg@gmail.com
+  signingkey = 604563291DF7C837
 [color]
   ui = true
   # auto is true for terminal but false when piped
@@ -9,7 +10,7 @@
   interactive = auto
   diff = auto
 [core]
-  excludesfile = /Users/darwingroskleg/.gitignore_global
+  excludesfile = ~/.gitignore_global
   # editor = subl -n -w
   editor = vim
   # "true" to avoid detecting if files have changed by setting the assume-unchanged bit
@@ -19,13 +20,34 @@
   # default = current
 [commit]
   template = ~/.gitmessage
+  gpgsign = true
 [rebase]
   autosquash = true
 [ssh]
   postBuffer = 524288000
+[diff]
+  tool = vimdiff
+  guitool = gvimdiff
+  algorithm = patience
+[difftool]
+  prompt = true
 #[difftool "sourcetree"]
 #	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 #	path = 
 #[mergetool "sourcetree"]
 #	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 #	trustExitCode = true
+#[credential]
+#	helper = osxkeychain
+
+# Enforce SSH
+#   Use ssh instead of username/password, which may fail when 2FA is required or
+#   password prompt happens as part of a subroutine.
+[url "git@github.com:"]
+  insteadOf = https://github.com/
+[url "ssh://git@gitlab.com/"]
+  insteadOf = https://gitlab.com/
+[url "ssh://git@bitbucket.org/"]
+  insteadOf = https://bitbucket.org/
+[init]
+  defaultBranch = master

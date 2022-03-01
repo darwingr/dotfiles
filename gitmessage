@@ -9,3 +9,5 @@
 # * Are there any side effects?
 #
 # Include a link to the ticket, if any.
+#
+# To abandon commiting changes, type  :qa!  and press <Enter> to exit Vim

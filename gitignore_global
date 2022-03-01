@@ -20,6 +20,7 @@ Thumbs.db
 *.pyc
 
 # Compiled C++ files
+*.o
 *.out
 
 # Application specific files
@@ -32,6 +33,7 @@ db/*.sqlite3
 log/*.log
 tmp/**/*
 !tmp/cache/.keep
+.cache
 
 # Vim
 *.sw[nop]
@@ -41,6 +43,12 @@ tmp/**/*
 Session.vim
 .netrwhist
 *~
+
+# Other IDE
+*.iml
+*.ipr
+*.iws
+.idea/
 
 # Ctags
 tags
